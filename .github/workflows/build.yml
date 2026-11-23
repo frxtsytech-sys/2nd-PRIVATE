@@ -1,0 +1,29 @@
+name: build
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 9.2.1
+      - name: Build
+        run: |
+          FILE=$(find . -name settings.gradle -not -path './.git/*' | head -n 1)
+          DIR=$(dirname "$FILE")
+          echo "Building in $DIR"
+          cd "$DIR"
+          gradle build
+          mkdir -p "$GITHUB_WORKSPACE/out"
+          find build/libs -name '*.jar' ! -name '*-sources.jar' -exec cp {} "$GITHUB_WORKSPACE/out/" \;
+          ls -la "$GITHUB_WORKSPACE/out"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: OblivionCombat-jar
+          path: ${{ github.workspace }}/out/*.jar
+          if-no-files-found: error
