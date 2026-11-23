@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "oblivioncombat",
+  "version": "${version}",
+  "name": "OblivionCombat",
+  "description": "Premium custom PvP weapons with animated abilities. Works in singleplayer, on servers, and in modpacks. Vanilla clients can join servers that have it.",
+  "authors": ["OblivionCombat"],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.oblivioncombat.OblivionCombat"]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.0",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
